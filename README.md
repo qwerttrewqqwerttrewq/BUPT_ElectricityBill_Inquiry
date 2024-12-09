@@ -1,0 +1,2 @@
+# BUPT_ElectricityBill_Inquiry
+解决宿舍电费耗尽前无通知的痛点
