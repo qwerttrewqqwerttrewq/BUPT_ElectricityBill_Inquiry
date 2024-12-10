@@ -188,7 +188,6 @@ def getEle():
         print("Failed to retrieve bed information.")
 def main():
     config=load_config()
-    dockerUrl='localhost:3001'
     toName=''
     timetosleep=60*60*24
     emergemount=10
@@ -236,7 +235,7 @@ def main():
             change = round(change, 2)
             seconds=now-datetime.fromisoformat(config['lastTime'])
             seconds=seconds.total_seconds()
-            power=-change*3600/seconds
+            power=-change*3600000/seconds
             power=round(power,2)
         previous=retObj["Surplus"]+retObj["FreeEnd"]
         config['lastTime']=now.isoformat()
