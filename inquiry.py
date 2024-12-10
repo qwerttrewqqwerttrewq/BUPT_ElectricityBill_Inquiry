@@ -140,7 +140,7 @@ def get_notification():
 
 
     
-def getEle():
+def getEle(config):
     url_login = "https://auth.bupt.edu.cn/authserver/login?noAutoRedirect=1&service=https%3A%2F%2Fapp.bupt.edu.cn%2Fa_bupt%2Fapi%2Fsso%2Fcas%3Fredirect%3Dhttps%253A%252F%252Fapp.bupt.edu.cn%252Fbuptdf%252Fwap%252Fdefault%252Fchong%26from%3Dwap"
     ticket_url = "https://app.bupt.edu.cn/a_bupt/api/sso/cas?redirect=https%3A%2F%2Fapp.bupt.edu.cn%2Fbuptdf%2Fwap%2Fdefault%2Fchong&from=wap&ticket={}"
     target_url = "https://app.bupt.edu.cn/buptdf/wap/default/chong"
@@ -150,8 +150,6 @@ def getEle():
     bed_url = "https://app.bupt.edu.cn/buptdf/wap/default/search"
 
     session = requests.Session()
-    config = load_config()
-
     castgc = login(session, url_login, config)
     eai_sess = get_eai_sess(session, ticket_url.format(castgc))
     chong=access_target_url(session, target_url)
@@ -221,14 +219,14 @@ def main():
         config['emergeSleep']=emergesleep
         config['emergeMount']=emergemount
         save_config(config)
-    session=requests.Session()
+    messagesession=requests.Session()
     
     previous=0
     change=0
     seconds=0
     power=0
     while True:
-        retObj=getEle()
+        retObj=getEle(config)
         now = datetime.now()
         if 'previous' in config and 'lastTime' in config:
             change=retObj["Surplus"]+retObj["FreeEnd"]-config['previous']
@@ -249,7 +247,7 @@ def main():
             }
         }
         
-        res=session.post(dockerUrl,json=payload)#设置docker链接
+        res=messagesession.post(dockerUrl,json=payload)#设置docker链接
         print("发送结果",res.text)
         if retObj["Surplus"]+retObj["FreeEnd"] <= emergemount:
             timetosleep=emergesleep

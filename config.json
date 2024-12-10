@@ -1,0 +1,16 @@
+{
+    "dockerUrl": "http://192.168.6.211:3001/webhook/msg/v2?token=ynqjzrjzrj",
+    "toName": "\u673a\u5668\u4eba\u6d4b\u8bd5",
+    "isRoom": true,
+    "timeToSleep": 60,
+    "emergeSleep": 30,
+    "emergeMount": 10,
+    "username": "2022211033",
+    "password": "wevta5-kohXyh-xifjam",
+    "areaid": 1,
+    "partmentId": "f2224047ad13475eb7091f910ae27585",
+    "floorId": "2",
+    "dromNum": "2-221",
+    "lastTime": "2024-12-10T16:21:40.882777",
+    "previous": 172.82
+}
