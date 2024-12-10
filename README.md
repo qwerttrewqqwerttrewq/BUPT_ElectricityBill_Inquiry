@@ -19,7 +19,7 @@ docker run -d --name wxBotWebhook -p 3001:3001 \
 dannicool/docker-wechatbot-webhook
 ```
 ### 2、首次运行
-先运行一次生成config文件，并查看是否有报错。无报错则可以直接用了，下一步持久化运行可以用你喜欢的方法，不一定用pm2
+先运行一次生成config文件，如果中途选择错误请手动删除config.json中的对应项。查看是否有报错。无报错则可以直接用了，下一步持久化运行可以用你喜欢的方法，不一定用pm2
 ### 3、持久化
 我这里使用的是pm2，因为有node环境。先运行一次npm install -g pm2，进入你放置inquiry.py和config.json的位置，运行pm2 start inquiry.py --name "mypy"，此时你的微信应该能收到一次消息并持久运行。
 
