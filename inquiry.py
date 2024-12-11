@@ -155,18 +155,10 @@ def getEle(config):
     chong=access_target_url(session, target_url)
     areaid = select_areaid(config)
     uukey = get_uukey(session, part_url, areaid, config)
-    tos = "机器人测试"
-    #上面这段能跑，但是有时间我再检查一下吧，似乎UUkey那一步是多余的
-    
     partment_id = post_and_select(session, part_url, {"areaid": areaid}, "partmentId", config, "partment")
-    # floor_ids = get_options(session, floor_url, {"partmentId": partment_id, "areaid": areaid})
     floor_id = post_and_select(session, floor_url, {"partmentId": partment_id, "areaid": areaid}, "floorId", config, "floor")
-    # drom_ids = get_options(session, drom_url, {"partmentId": partment_id, "areaid": areaid, "floorId": floor_id})
     drom_id = post_and_select_drom(session, drom_url, {"partmentId": partment_id, "areaid": areaid, "floorId": floor_id}, "dromNum", config, "drom")
-    
-    
     print(f"Selected drom: {drom_id}")
-    # Final POST for bed selection
     payload = {
         "partmentId": partment_id,
         "areaid": areaid,
@@ -187,7 +179,7 @@ def getEle(config):
 def main():
     config=load_config()
     toName=''
-    timetosleep=60*60*24
+    timeTosleep=60*60*24
     emergemount=10
     emergesleep=60*60
     isRoom=False
@@ -219,7 +211,8 @@ def main():
         config['emergeSleep']=emergesleep
         config['emergeMount']=emergemount
         save_config(config)
-    messagesession=requests.Session()
+    session=requests.Session()
+    
     
     previous=0
     change=0
@@ -247,10 +240,12 @@ def main():
             }
         }
         
-        res=messagesession.post(dockerUrl,json=payload)#设置docker链接
+        res=session.post(dockerUrl,json=payload)#设置docker链接
         print("发送结果",res.text)
         if retObj["Surplus"]+retObj["FreeEnd"] <= emergemount:
-            timetosleep=emergesleep
-        time.sleep(timetosleep)
+            timeTosleep=emergesleep
+        else: timeTosleep=timetosleep
+        print("start sleeping")
+        time.sleep(timeTosleep)
 if __name__ == "__main__":
     main()
