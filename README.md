@@ -1,8 +1,7 @@
 # BUPT_ElectricityBill_Inquiry
 
-解决宿舍电费耗尽前无通知的痛点
+北邮电费查询工具，接入微信机器人，包含最新CAS Login流程
 
-# 说明
 
 ## 概要
 本项目基于python开发，完成了北邮CAS Login 流程以及电费查询，以及对 [wechatbot-webhook](https://github.com/danni-cool/wechatbot-webhook)微信机器人的对接
