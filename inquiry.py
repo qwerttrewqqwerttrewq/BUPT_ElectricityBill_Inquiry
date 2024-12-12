@@ -71,8 +71,6 @@ def get_uukey(session, part_url, areaid, config):
 def access_target_url(session, target_url):
     print(f"Accessing target URL: {target_url}")
     response = session.get(target_url)
-    
-
     if response.status_code == 200:
         return response.text  
     else:
@@ -123,23 +121,7 @@ def post_and_select_drom(session, url, payload, key, config, step_name):
     config["dromNum"] = selected_id
     save_config(config)
     return selected_id
-# Main script execution
-def send_notification(message,name,isRoom=False):
-    newSession = requests.Session()
-    payload={
-        "to":name,
-        "isRoom":True,
-        "data":{
-        "content":message
-    }
-    }
-    newSession.post("http://localhost:3001/send_msg",data=payload)
-def get_notification():
-    newSession = requests.Session()
-    return 
 
-
-    
 def getEle(config):
     url_login = "https://auth.bupt.edu.cn/authserver/login?noAutoRedirect=1&service=https%3A%2F%2Fapp.bupt.edu.cn%2Fa_bupt%2Fapi%2Fsso%2Fcas%3Fredirect%3Dhttps%253A%252F%252Fapp.bupt.edu.cn%252Fbuptdf%252Fwap%252Fdefault%252Fchong%26from%3Dwap"
     ticket_url = "https://app.bupt.edu.cn/a_bupt/api/sso/cas?redirect=https%3A%2F%2Fapp.bupt.edu.cn%2Fbuptdf%2Fwap%2Fdefault%2Fchong&from=wap&ticket={}"
@@ -212,8 +194,6 @@ def main():
         config['emergeMount']=emergemount
         save_config(config)
     session=requests.Session()
-    
-    
     previous=0
     change=0
     seconds=0
@@ -239,8 +219,7 @@ def main():
             "content": "查询时间："+str(now)+"\n剩余电量：" + str(retObj["Surplus"]) + "度\n剩余赠送电量：" + str(retObj["FreeEnd"])+"度\n与上次查询相比变化："+str(change)+"\n距离上次查询："+str(timedelta(seconds=seconds))+"\n平均功率:"+str(power)+"W"
             }
         }
-        
-        res=session.post(dockerUrl,json=payload)#设置docker链接
+        res=session.post(dockerUrl,json=payload)
         print("发送结果",res.text)
         if retObj["Surplus"]+retObj["FreeEnd"] <= emergemount:
             timeTosleep=emergesleep
